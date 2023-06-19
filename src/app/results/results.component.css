@@ -1,0 +1,19 @@
+.survey-statistics {
+ height: 100vh;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center; 
+}
+
+.statistic {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  gap: 100px
+}
+
+.statistic span {
+  margin-right: 10px;
+}

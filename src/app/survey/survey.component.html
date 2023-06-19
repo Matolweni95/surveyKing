@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Survey King</title>
+</head>
+<body>
+  <button class="home-btn"  (click)="goBackToView1()"><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>Go Back Home</button>
+  <h2>Take our Survey</h2>
+  <h3>Personal Details:</h3>
+
+  <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
+    <div class="form-container">
+      <div class="personal-container">
+
+    <div class="question">
+      <label for="name">Name:</label>
+      <input type="text" id="name" formControlName="name">
+      <div *ngIf="surveyForm.get('name')?.invalid && surveyForm.get('name')?.touched" class="error">
+        Name is required and should contain only alphabets and spaces.
+      </div>
+    </div>
+
+    <div class="question">
+      <label for="surname">Surname:</label>
+      <input type="text" id="surname" formControlName="surname">
+      <div *ngIf="surveyForm.get('surname')?.invalid && surveyForm.get('surname')?.touched" class="error">
+        Surname is required and should contain only alphabets and spaces.
+      </div>
+    </div>
+
+    <div class="question">
+      <label for="contactNumber">Contact Number:</label>
+      <input type="text" id="contactNumber" formControlName="contactNumber">
+      <div *ngIf="surveyForm.get('contactNumber')?.invalid && surveyForm.get('contactNumber')?.touched" class="error">
+        Contact Number is required and should be a 10-digit number.
+      </div>
+    </div>
+
+    <div class="question">
+        <label for="date">Date:</label>
+        <input type="text" [value]="currentDate" readonly>
+    </div>
+    
+    <div class="question">
+      <label for="age">Age:</label>
+      <input type="number" id="age" formControlName="age">
+      <div *ngIf="surveyForm.get('age')?.invalid && surveyForm.get('age')?.touched" class="error">
+        Age is required and should be between 5 and 120.
+      </div>
+    </div>
+
+  </div>
+  <div class="checklist-container">
+    <div class="checklist">
+      <label>What is your favorite food? (You can choose more than 1 answer)</label>
+      <div class="options">
+        <div *ngIf="!isAtLeastOneCheckboxSelected() && surveyForm.get('favoriteFood')?.touched" class="error">
+          Please select at least one favorite food.
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" formControlName="pizza" value="Pizza"> Pizza
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" formControlName="pasta" value="Pasta"> Pasta
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" formControlName="papAndWors" value="Pap and Wors"> Pap and Wors
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" formControlName="chickenStirFry" value="Chicken stir fry"> Chicken stir fry
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" formControlName="beefStirFry" value="Beef stir fry"> Beef stir fry
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" formControlName="other" value="Other"> Other
+          </label>
+        </div>
+      </div>
+      <div *ngIf="!isAtLeastOneCheckboxSelected() && surveyForm.get('favoriteFood')?.touched" class="error">
+        Please select at least one favorite food.
+      </div>
+    </div>
+    </div>
+</div>
+    <div class="questions">
+      <label>On a scale of 1 to 5 indicate whether you strongly agree to strongly disagree</label>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Strongly Agree (1)</th>
+          <th>Agree (2)</th>
+          <th>Neutral (3)</th>
+          <th>Disagree (4)</th>
+          <th>Strongly Disagree (5)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>I like to eat out</td>
+          <td><input type="radio" formControlName="eatOut" [value]="1"></td>
+          <td><input type="radio" formControlName="eatOut" [value]="2"></td>
+          <td><input type="radio" formControlName="eatOut" [value]="3"></td>
+          <td><input type="radio" formControlName="eatOut" [value]="4"></td>
+          <td><input type="radio" formControlName="eatOut" [value]="5"></td>
+        </tr>
+        <tr>
+          <td>I like to watch movies</td>
+          <td><input type="radio" formControlName="watchMovies" [value]="1"></td>
+          <td><input type="radio" formControlName="watchMovies" [value]="2"></td>
+          <td><input type="radio" formControlName="watchMovies" [value]="3"></td>
+          <td><input type="radio" formControlName="watchMovies" [value]="4"></td>
+          <td><input type="radio" formControlName="watchMovies" [value]="5"></td>
+        </tr>
+        <tr>
+          <td>I like to watch TV</td>
+          <td><input type="radio" formControlName="watchTV" [value]="1"></td>
+          <td><input type="radio" formControlName="watchTV" [value]="2"></td>
+          <td><input type="radio" formControlName="watchTV" [value]="3"></td>
+          <td><input type="radio" formControlName="watchTV" [value]="4"></td>
+          <td><input type="radio" formControlName="watchTV" [value]="5"></td>
+        </tr>
+        <tr>
+          <td>I like to listen to the radio</td>
+          <td><input type="radio" formControlName="listenToRadio" [value]="1"></td>
+          <td><input type="radio" formControlName="listenToRadio" [value]="2"></td>
+          <td><input type="radio" formControlName="listenToRadio" [value]="3"></td>
+          <td><input type="radio" formControlName="listenToRadio" [value]="4"></td>
+          <td><input type="radio" formControlName="listenToRadio" [value]="5"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!isRadioGroupSelected('eatOut') && surveyForm.get('eatOut')?.touched" class="error">
+      Please select an option for "I like to eat out".
+    </div>
+    <div *ngIf="!isRadioGroupSelected('watchMovies') && surveyForm.get('watchMovies')?.touched" class="error">
+      Please select an option for "I like to watch movies".
+    </div>
+    <div *ngIf="!isRadioGroupSelected('watchTV') && surveyForm.get('watchTV')?.touched" class="error">
+      Please select an option for "I like to watch TV".
+    </div>
+    <div *ngIf="!isRadioGroupSelected('listenToRadio') && surveyForm.get('listenToRadio')?.touched" class="error">
+      Please select an option for "I like to listen to the radio".
+    </div>
+    </div>
+  
+    <!-- Submit button -->
+    <button type="submit" [disabled]="surveyForm.invalid ">Submit</button>
+    <!-- <button (click)="btn()">Submit</button> -->
+
+  
+  </form>
+</body>
+</html>
